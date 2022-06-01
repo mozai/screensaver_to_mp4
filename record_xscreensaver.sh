@@ -23,7 +23,10 @@ ffmpeg -codecs 2>/dev/null | grep -q '^ .EV... h264 ' \
 
 ##########
 # main
-arg1="$1"
+arg1=${1:-""}
+if [ "${arg1}" == "" ]; then
+  die  "Usage: [duration=seconds] $0 xscreensaverhack [hackparam1 hackparam2 ...]"
+fi
 shift
 if [ -x "${arg1}" ]; then
   hackname="${arg1}"
@@ -31,6 +34,8 @@ elif [ -x "/usr/local/lib/xscreensaver/${arg1}" ]; then
   hackname="/usr/local/lib/xscreensaver/${arg1}"
 elif [ -x "/usr/lib/xscreensaver/${arg1}" ]; then
   hackname="/usr/lib/xscreensaver/${arg1}"
+elif [ -x "/usr/libexec/xscreensaver/${arg1}" ]; then
+  hackname="/usr/libexec/xscreensaver/${arg1}"
 else
   die "no xscreensaver hack found named \"${arg1}\""
 fi
@@ -57,6 +62,7 @@ ffmpeg -hide_banner -v warning -threads 0 \
 kill "$cpid"
 echo ""
 quack "$(ls -lh "${tempfile}")"
+# I tried using "-b:v 1000k" and it looked like butt. :(
 ffmpeg -hide_banner -v warning -threads 0 -i "${tempfile}" \
   -an -c:v h264 -pix_fmt yuv420p -preset slow "${outfile}" \
   && rm "${tempfile}"

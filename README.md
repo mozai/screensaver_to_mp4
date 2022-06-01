@@ -1,7 +1,8 @@
 XScreenSaver to mp4
 ==========
-To spontaneously record the xscreensaver hacks as video files.
-Thx to Albert Veli for giving me a clue, and of course Jamie Zawinski for
+To spontaneously record the xscreensaver hacks as video
+files.  Thx to Albert Veli for giving me a clue, alexgran
+for a Debian-bullseye patch, and of course Jamie Zawinski for
 [XScreenSaver](https://jwz.org/xscreensaver/).
 
 * remember to disable other screensavers while you're recording
